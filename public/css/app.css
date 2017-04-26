@@ -1,17 +1,16 @@
 body {
-  background: #667292;
+  background: #f1e3dd;
   font-family: "Open Sans", sans-serif;
 }
 
 .header {
-  color: #cfe0e8;
+  color: #667292;
   font-family: "Lato", sans-serif;
   text-align: center;
   width: 100%;
 }
 
 .container {
-  background: #667292;
   height: 90vh;
   margin: 5vh auto;
   overflow: scroll;
@@ -37,7 +36,7 @@ ul {
   margin: 0 auto;
   text-align: center;
   list-style: none;
-  color: #87bdd8;
+  color: #667292;
 }
 
 
