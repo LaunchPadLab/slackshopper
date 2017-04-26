@@ -23,18 +23,21 @@ body {
 }
 
 .list-header {
-
+  color: #cfe0e8;
+  font-family: "Lato", sans-serif;
+  text-align: center;
+  width: 100%;
 }
 
-.shopping-list {
-  background: #8d9db6;
-  width: 400px;
-  margin-right: 200px;
-  margin-left: 200px;
-}
-
-.item {
+h4 {
+  text-align: center;
   color: #b7d7e8;
+}
+ul {
+  margin: 0 auto;
+  text-align: center;
+  list-style: none;
+  color: #87bdd8;
 }
 
 

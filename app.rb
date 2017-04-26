@@ -25,7 +25,7 @@ end
 
 post '/new-list' do
   if params[:token] == config[:outgoing_token]
-    state = Base64.urlsafe_encode64('{"channel_id":"' + config[:slack_channel_id] + '"}')
+    state = Base64.urlsafe_encode64('{"channel_id":"' + config[:slack_channel_id] + '", "timeframe":"' + params[:text] + '"}')
     headers = { 'Content-Type' => "application/json" }
     body = {  response_type: 'ephemeral',
               text: "Let's go shopping!",
@@ -47,14 +47,16 @@ get "/authorize" do
   auth_url   = "https://slack.com/api/oauth.access?client_id=#{config[:client_id]}&client_secret=#{config[:client_secret]}&code=#{code}"
   response   = JSON.parse(HTTParty.get(auth_url).body)
   auth_token = response["access_token"]
-
   redirect("/shopping-lists/new?token=#{auth_token}&state=#{state}")
 end
 
 get "/shopping-lists/new" do
   auth_token = params[:token]
   channel_id = config[:slack_channel_id]
-  timeframe = Chronic.parse(config[:timeframe]).to_i
+  state = JSON.parse(Base64.urlsafe_decode64(params[:state]))
+  @last_date = state["timeframe"]
+  timeframe = Chronic.parse(state["timeframe"]).to_i
+  @today = DateTime.now.strftime("%-m/%-d/%Y")
   hist_url = "https://slack.com/api/channels.history?token=#{auth_token}&channel=#{channel_id}&oldest=#{timeframe}"
   response = JSON.parse(HTTParty.get(hist_url).body)
 
