@@ -64,7 +64,17 @@ get "/shopping-lists/new" do
     erb "no_items.html".to_sym
   else
     @shopping_list = response["messages"]
-    @items = @shopping_list.map { |item| item["text"] }
+    @items = @shopping_list.map do |item|
+      url = ""
+      if item["text"].include? "<http"
+        product = item["text"].split(" <").first
+        url = "http" + item["text"].split("http")[1].split(">")[0]
+      else
+        product = item["text"]
+        url = nil
+      end
+      [product, url]
+    end
     erb "todays_list.html".to_sym
   end
 end
